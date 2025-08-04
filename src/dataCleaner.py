@@ -29,7 +29,7 @@ class DataCleaner:
         """"Set the dataframe content to a lowercase letters.
 
         Returns:
-             pd.DataFarame: with lowercase letters .
+             pd.DataFrame: with lowercase letters .
         """
 
         self.df = self.df.applymap(lambda x: x.lower() if isinstance(x, str) else x)
