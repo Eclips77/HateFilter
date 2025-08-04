@@ -22,9 +22,9 @@ After running the program, you will find two output files in the `results/` fold
 * **Statistics (JSON):** A JSON file (`data_statistics.json`) with a summary of analysis results. This includes:
 
   * Total number of texts and columns in the dataset.
-  * Count of texts by category (e.g. how many are antisemitic vs not).
-  * Average words per text (overall and broken down by category).
-  * The three longest texts in the dataset (by character length).
+  * Count of texts by category how many are antisemitic vs not.
+  * Average words per text overall and broken down by category.
+  * The three longest texts in the dataset by character length.
   * The top 10 most common words in the text content.
   * The count of all-uppercase words in texts, grouped by category.
 
