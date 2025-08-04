@@ -79,12 +79,3 @@ class DataAnalyzer:
             lambda x: x.str.findall(r'\b[A-Z]+\b').str.len().sum()
         )
         return capital_counts.to_dict()
-
-
-
-# df = pd.read_csv(r"C:/Users/brdwn/Desktop/my_projects/Python/AppsProjects/HateFilter/Data/tweets_dataset.csv")
-
-# data = DataAnalyzer(df, "Biased", "Text")
-# x = data.count_capital_words()
-# print(x)
-

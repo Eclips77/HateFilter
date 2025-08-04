@@ -57,11 +57,3 @@ class DataCleaner:
         self.df = self.df.dropna()
         return self.df
         
-
-    
-
-# df = pd.read_csv(r"C:/Users/brdwn/Desktop/my_projects/Python/AppsProjects/HateFilter/Data/tweets_dataset.csv")
-# dd = DataCleaner(df)
-# x = dd.return_required_columns(["Text","Biased"])
-# print(x.head(15))
-
