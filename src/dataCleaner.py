@@ -25,7 +25,7 @@ class DataCleaner:
         self.df.drop_duplicates(inplace=True)
         return self.df
     
-    def change_to_lowerCase(self,) -> pd.DataFrame:
+    def convert_to_lowercase(self,) -> pd.DataFrame:
         """"Set the dataframe contant to a lowercase letters.
 
         Returns:
