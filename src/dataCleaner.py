@@ -4,8 +4,8 @@ import string
 class DataCleaner:
     """Class for cleaning and preprocessing data.
     
-    This class provides methods to clean raw datasets by removing missing values,
-    duplicate rows, and other data quality issues.
+    This class provides methods to clean raw datasets by removing unnecessary columns,
+    punctuation signs, and other data quality issues.
     """
 
     def __init__(self, df: pd.DataFrame):
