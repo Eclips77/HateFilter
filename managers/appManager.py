@@ -73,10 +73,8 @@ class AppManager:
         if self.raw_data is None:
             raise ValueError("No data loaded. Call load_data() first.")
         
-        # Initialize data analyzer with raw data
         analyzer = DataAnalyzer(self.raw_data, 'Biased', 'Text')
         
-        # Get all statistics
         self.statistics = {
             'analysis_timestamp': datetime.now().isoformat(),
             'dataset_info': {
@@ -86,27 +84,21 @@ class AppManager:
             }
         }
         
-        # Tweet counts by category
         tweet_counts = analyzer.get_tweet_counts()
         self.statistics.update(tweet_counts)
         
-        # Average tweet length
         avg_length = analyzer.calculate_average_tweet_length()
         self.statistics.update(avg_length)
         
-        # Convert DataFrame to dict for JSON serialization
         if 'average_word_count_by_category' in self.statistics:
             self.statistics['average_word_count_by_category'] = self.statistics['average_word_count_by_category'].to_dict('records')
         
-        # 3 longest tweets
         longest_tweets = analyzer.get_3longest_tweets()
         self.statistics['longest_tweets'] = longest_tweets
         
-        # Most common words
         common_words = analyzer.get_most_common_words(top_n=10)
         self.statistics['most_common_words'] = common_words
         
-        # Capital words count by category
         capital_words = analyzer.count_capital_words()
         self.statistics['capital_words_by_category'] = capital_words
         
