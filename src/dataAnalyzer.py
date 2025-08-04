@@ -43,17 +43,23 @@ class DataAnalyzer:
             'average_word_count_by_category': self.df.groupby(self.category)["word_count"].mean().reset_index()
         }
 
+    
     def get_3longest_tweets(self) -> dict:
-        """Returns a dictionary containing the three longest tweets based on the length of their content.
-        The method calculates the length of each tweet's content, sorts the DataFrame in descending order
-        by content length, and retrieves the top three longest tweets.
-
-        Returns:
-            dict: A dictionary where the keys are the indices of the tweets and the values are the tweet contents.
-        """
-        sorted_df = self.df.sort_values(by=self.message_column, key=lambda x: x.str.len(), ascending=False)
-        return sorted_df[self.message_column].head(3).to_dict()
+        """Returns the three longest tweets for each category in the target column.
         
+        Returns:
+            dict: Keys are category names, values are dictionaries of the top 3 longest tweets per category.
+        """
+        result = {}
+        for category, group in self.df.groupby(self.category):
+            sorted_group = group.sort_values(
+                by=self.message_column,
+                key=lambda x: x.apply(lambda t: len(str(t).split())), 
+                ascending=False
+            )
+            result[category] = sorted_group[self.message_column].head(3).to_dict()
+        return result
+            
     def get_most_common_words(self,top_n=10) -> dict:
         """"Returns a dictionary containing the ten most common words in the tweets column.
         This method concatenates all the tweets, splits them into words, counts their occurrences,
