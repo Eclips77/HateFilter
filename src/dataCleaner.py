@@ -34,3 +34,16 @@ class DataCleaner:
 
         self.df = self.df.applymap(lambda x: x.lower() if isinstance(x, str) else x)
         return self.df
+    
+
+    
+
+
+
+
+
+
+
+
+
+
