@@ -8,7 +8,7 @@
 2. **Prepare the Data:** Provide a CSV file with your text data. By default, the program expects a file at `Data/tweets_dataset.csv` containing at least a **Text** column (the text content) and a **Biased** column (the label indicating whether each text is antisemitic or not). You can use your own dataset by placing it in this path or updating the file path in the code.
 3. **Run the Analysis:** Execute the main script to run the pipeline:
 
-   ```bash
+   ```cli
    python main.py
    ```
 
