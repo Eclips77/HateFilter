@@ -17,7 +17,7 @@ class DataAnalyzer:
         """
         self.df = df
         self.category = categoryColumn
-        self.content_column = tweet_text_column
+        self.message_column = tweet_text_column
         
     def get_tweet_counts(self) -> dict:
         """Get the count of tweets by category.
@@ -32,20 +32,16 @@ class DataAnalyzer:
         return {'tweets_count':tweets_count}
         
     def calculate_average_tweet_length(self) -> dict:
-        """Calculate the average length of tweets in the dataset.
+        if self.message_column not in self.df or self.category not in self.df:
+            raise ValueError("Missing required columns.")
 
-        Returns:
-            dict: A dictionary with the average tweet length.
-        """
-        if self.content_column not in self.df.columns:
-            raise ValueError(f"Column '{self.content_column}' does not exist in the DataFrame.")
-        
-        if self.category not in self.df.columns:
-            raise ValueError(f"Column '{self.category}' does not exist in the DataFrame.")
-        
-        avg_length = self.df[self.content_column].apply(len).mean()
-        avg_length_by_category = self.df.groupby(self.category)[self.content_column].apply(lambda x: x.apply(len).mean()).reset_index()
-        return {'average_tweet_length': avg_length,'average_length_by_category':avg_length_by_category}
+        word_count = lambda text: len(str(text).split())
+        self.df["word_count"] = self.df[self.message_column].apply(word_count)
+
+        return {
+            'average_tweet_word_count': self.df["word_count"].mean(),
+            'average_word_count_by_category': self.df.groupby(self.category)["word_count"].mean().reset_index()
+        }
 
     def get_3longest_tweets(self) -> dict:
         """Returns a dictionary containing the three longest tweets based on the length of their content.
@@ -55,8 +51,8 @@ class DataAnalyzer:
         Returns:
             dict: A dictionary where the keys are the indices of the tweets and the values are the tweet contents.
         """
-        sorted_df = self.df.assign(content_length=self.df[self.content_column].str.len()).sort_values(by='content_length', ascending=False)
-        return sorted_df[self.content_column].head(3).to_dict()
+        sorted_df = self.df.sort_values(by=self.message_column, key=lambda x: x.str.len(), ascending=False)
+        return sorted_df[self.message_column].head(3).to_dict()
         
     def get_most_common_words(self,top_n=10) -> dict:
         """"Returns a dictionary containing the ten most common words in the tweets column.
@@ -69,17 +65,26 @@ class DataAnalyzer:
 
         """
     
-        all_words = ' '.join(self.df[self.content_column].dropna())
+        all_words = ' '.join(self.df[self.message_column].dropna())
         word_counts = Counter(all_words.split())
         return dict(word_counts.most_common(top_n))
 
-    def get_
+    def count_capital_words(self) -> dict:
+        """Count capital words by category.
+        
+        Returns:
+            dict: Dictionary with category as key and capital word count as value.
+        """
+        capital_counts = self.df.groupby(self.category)[self.message_column].apply(
+            lambda x: x.str.findall(r'\b[A-Z]+\b').str.len().sum()
+        )
+        return capital_counts.to_dict()
 
 
 
-df = pd.read_csv(r"C:/Users/brdwn/Desktop/my_projects/Python/AppsProjects/HateFilter/Data/tweets_dataset.csv")
+# df = pd.read_csv(r"C:/Users/brdwn/Desktop/my_projects/Python/AppsProjects/HateFilter/Data/tweets_dataset.csv")
 
-data = DataAnalyzer(df, "Biased", "Text")
-x = data.get_most_common_words()
-print(x)
+# data = DataAnalyzer(df, "Biased", "Text")
+# x = data.count_capital_words()
+# print(x)
 
