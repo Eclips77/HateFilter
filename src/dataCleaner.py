@@ -21,6 +21,15 @@ class DataCleaner:
         Returns:
             pd.DataFrame: Cleaned DataFrame with no missing values or duplicates.
         """
-        self.df.dropna(inplace=True)
+        
         self.df.drop_duplicates(inplace=True)
         return self.df
+    
+    def change_to_lowerCase(self,) -> pd.DataFrame:
+        """"Set the dataframe contant to a lowercase letters.
+
+        Returns:
+             pd.DataFarame: with lowercase letters .
+        """"
+
+        self.df = self.df.applymap(lambda x: x.lower() if isinstance(x, str) else x)
