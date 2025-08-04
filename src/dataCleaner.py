@@ -26,10 +26,11 @@ class DataCleaner:
         return self.df
     
     def convert_to_lowercase(self,) -> pd.DataFrame:
-        """"Set the dataframe contant to a lowercase letters.
+        """"Set the dataframe content to a lowercase letters.
 
         Returns:
              pd.DataFarame: with lowercase letters .
         """"
 
         self.df = self.df.applymap(lambda x: x.lower() if isinstance(x, str) else x)
+        return self.df
