@@ -32,7 +32,7 @@ class AppManager:
         
         self.save_cleaned_data()
         
-        return self.statistics
+        # return self.statistics
     
     def load_data(self):
         """Load the raw data from CSV file."""
