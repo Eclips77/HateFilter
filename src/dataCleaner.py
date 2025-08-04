@@ -30,7 +30,7 @@ class DataCleaner:
 
         Returns:
              pd.DataFarame: with lowercase letters .
-        """"
+        """
 
         self.df = self.df.applymap(lambda x: x.lower() if isinstance(x, str) else x)
         return self.df
